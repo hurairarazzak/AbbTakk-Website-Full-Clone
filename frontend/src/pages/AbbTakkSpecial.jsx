@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import FullCategoryNews from "../components/FullCategoryNews";
 
 const AbbTakkSpecial = () => {
-  return (
-    <div>AbbTakkSpecial</div>
-  )
-}
+  return <FullCategoryNews category="AbbTakk Special" />;
+};
 
-export default AbbTakkSpecial
+export default AbbTakkSpecial;

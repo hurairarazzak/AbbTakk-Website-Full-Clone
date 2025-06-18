@@ -1,4 +1,7 @@
 import express from "express";
+import News from '../models/News.js';
+import upload from "../middleware/upload.js";
+import verifyAdmin from "../middleware/auth.js";
 import {
   getAllNews,
   getNewsBySlug,
@@ -6,15 +9,36 @@ import {
   createNews,
   updateNews,
   deleteNews,
+  getMostPopularNews,
+  searchNews,
 } from "../controllers/newsController.js";
 
 const router = express.Router();
 
 router.get("/", getAllNews);
 router.get("/slug/:slug", getNewsBySlug);
-router.get("/category/:category", getNewsByCategory);
-router.post("/", createNews);
-router.put("/:id", updateNews);
-router.delete("/:id", deleteNews);
+router.get("/popular", getMostPopularNews);
+router.get("/search", searchNews);
+
+router.post("/", verifyAdmin, upload.single("image"), createNews);
+router.put("/:id", verifyAdmin, updateNews);
+router.delete("/:id", verifyAdmin, deleteNews);
+
+// ✅ category-based fetch with case-insensitive matching
+router.get('/category/:category', async (req, res) => {
+  const category = req.params.category;
+
+  try {
+    const news = await News.find({
+      category: { $regex: new RegExp(`^${category}$`, 'i') }, // case-insensitive
+      isMostPopular: false // ✅ make sure to exclude popular news
+    });
+
+    res.json(news);
+  } catch (err) {
+    console.error('Error fetching category news:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 export default router;

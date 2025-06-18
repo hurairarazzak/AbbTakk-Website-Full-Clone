@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import FullCategoryNews from "../components/FullCategoryNews";
 
 const Pakistan = () => {
-  return (
-    <div>Pakistan</div>
-  )
-}
+  return <FullCategoryNews category="Pakistan" />;
+};
 
-export default Pakistan
+export default Pakistan;

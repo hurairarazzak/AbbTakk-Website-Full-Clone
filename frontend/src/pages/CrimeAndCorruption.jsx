@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import FullCategoryNews from "../components/FullCategoryNews";
 
 const CrimeAndCorruption = () => {
-  return (
-    <div>CrimeAndCorruption</div>
-  )
-}
+  return <FullCategoryNews category="Crime And Corruption" />;
+};
 
-export default CrimeAndCorruption
+export default CrimeAndCorruption;

@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import FullCategoryNews from "../components/FullCategoryNews";
 
 const HealthAndEnvironment = () => {
-  return (
-    <div>HealthAndEnvironment</div>
-  )
-}
+  return <FullCategoryNews category="Health And Environment" />;
+};
 
-export default HealthAndEnvironment
+export default HealthAndEnvironment;

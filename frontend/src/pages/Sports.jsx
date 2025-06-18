@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import FullCategoryNews from "../components/FullCategoryNews";
 
 const Sports = () => {
-  return (
-    <div>Sports</div>
-  )
-}
+  return <FullCategoryNews category="Sports" />;
+};
 
-export default Sports
+export default Sports;

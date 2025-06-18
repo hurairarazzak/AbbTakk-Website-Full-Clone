@@ -19,15 +19,20 @@ const TopTierCategories = ({ title, news }) => {
       {/* NEWS LIST */}
       <div className="space-y-4">
         {news.map((item, index) => (
-          <Link to={`/${item.slug}`} key={index} className="flex items-start gap-3 group">
-            <img src={item.image} alt={item.title} className="w-20 h-14 object-cover" />
-            <div>
-              <h3 className="text-[12px] font-semibold text-gray-700 group-hover:text-red-600">
-                {item.title}
-              </h3>
-              <p className="text-xs text-gray-500">{item.date}</p>
-            </div>
-          </Link>
+        <Link
+        to={`/${item.slug}`}
+        state={item}
+        key={index}
+        className="flex items-start gap-3 group"
+      >
+        <img src={item.image} alt={item.title} className="w-20 h-14 object-cover" />
+        <div>
+          <h3 className="text-[12px] font-semibold text-gray-700 group-hover:text-red-600">
+            {item.title}
+          </h3>
+          <p className="text-xs text-gray-500">{item.date}</p>
+        </div>
+      </Link>      
         ))}
       </div>
     </div>
