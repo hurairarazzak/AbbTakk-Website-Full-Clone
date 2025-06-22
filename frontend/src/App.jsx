@@ -21,6 +21,10 @@ import CrimeAndCorruption from './pages/CrimeAndCorruption';
 import CourtAndCases from './pages/CourtAndCases';
 import HealthAndEnvironment from './pages/HealthAndEnvironment';
 import Technology from './pages/Technology';
+import AdminLogin from './admin/AdminLogin';
+import AdminDashboard from './admin/AdminDashboard';
+import AdminNewsManager from './admin/AdminNewsManager';
+// import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -46,6 +50,9 @@ function App() {
         <Route path="/health-and-environment" element={<HealthAndEnvironment />} />
         <Route path="/technology" element={<Technology />} />
         <Route path="/:slug" element={<NewsDetail />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/manage-news" element={<AdminNewsManager />} />
       </Routes>
     </Router>
   );

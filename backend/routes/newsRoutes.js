@@ -7,7 +7,6 @@ import {
   getNewsBySlug,
   getNewsByCategory,
   createNews,
-  updateNews,
   deleteNews,
   getMostPopularNews,
   searchNews,
@@ -21,7 +20,7 @@ router.get("/popular", getMostPopularNews);
 router.get("/search", searchNews);
 
 router.post("/", verifyAdmin, upload.single("image"), createNews);
-router.put("/:id", verifyAdmin, updateNews);
+router.put("/:id", verifyAdmin);
 router.delete("/:id", verifyAdmin, deleteNews);
 
 // ✅ category-based fetch with case-insensitive matching
@@ -30,9 +29,9 @@ router.get('/category/:category', async (req, res) => {
 
   try {
     const news = await News.find({
-      category: { $regex: new RegExp(`^${category}$`, 'i') }, // case-insensitive
-      isMostPopular: false // ✅ make sure to exclude popular news
-    });
+      category: { $regex: new RegExp(`^${category}$`, 'i') },
+      isMostPopular: false
+    }).sort({ createdAt: -1 }); // ✅ Sort
 
     res.json(news);
   } catch (err) {

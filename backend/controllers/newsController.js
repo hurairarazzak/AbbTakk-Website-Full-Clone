@@ -10,7 +10,7 @@ const slugify = (text) =>
 
 export const getAllNews = async (req, res) => {
   try {
-    const allNews = await News.find();
+    const allNews = await News.find().sort({ createdAt: -1 }); // ✅ Sort by newest first
     res.json(allNews);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -55,8 +55,8 @@ export const getNewsByCategory = async (req, res) => {
 
     const news = await News.find({
       category: category,
-      isMostPopular: false, // ✅ Confirmed by you
-    });
+      isMostPopular: false,
+    }).sort({ createdAt: -1 }); // ✅ Sort
 
     res.json(news);
   } catch (err) {
@@ -112,49 +112,6 @@ export const createNews = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
-
-
-export const updateNews = async (req, res) => {
-  try {
-    const { title, image, content, category, isPinned, isMostPopular } = req.body;
-
-    if (isPinned && !isMostPopular) {
-      return res.status(400).json({
-        message: "Pinned news must also be marked as Most Popular.",
-      });
-    }    
-
-    const slug = title ? slugify(title) : undefined;
-
-    const updatedFields = {
-      ...(title && { title }),
-      ...(image && { image }),
-      ...(content && { content }),
-      ...(category && { category }),
-      ...(typeof isPinned !== 'undefined' && { isPinned }),
-      ...(typeof isMostPopular !== 'undefined' && { isMostPopular }),
-      ...(slug && { slug }),
-    };
-
-    // ✅ Remove category if it's Most Popular
-    if (isMostPopular) {
-      updatedFields.category = null;
-    }
-
-    const updated = await News.findByIdAndUpdate(req.params.id, updatedFields, { new: true });
-    res.json(updated);
-
-    if ((isMostPopular && !isPinned) || (!isMostPopular && isPinned)) {
-      return res.status(400).json({
-        message: "isMostPopular and isPinned must both be true or both be false together.",
-      });
-    }
-    
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
 
 export const deleteNews = async (req, res) => {
   try {

@@ -2,6 +2,21 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/news'; // adjust if needed
 
+export const loginAdmin = async (email, password) => {
+  const res = await axios.post('http://localhost:5000/api/admin/login', {
+    email,
+    password,
+  });
+  return res.data;
+};
+
+export const fetchAllNews = async () => {
+    const res = await axios.get(API_URL);
+    const sortedNews = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    setNewsList(sortedNews);
+};
+
+
 export const fetchHeadlines = async () => {
   const res = await axios.get(`${API_URL}/category/Headlines`);
   return res.data; // default
