@@ -11,9 +11,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middlewares
-app.use(cors({ origin: "https://abb-takk-website-full-clone.vercel.app/" }));
+// ✅ New (allow both frontend domains OR use wildcard if safe)
+app.use(cors({
+  origin: [
+    "https://abb-takk-website-full-clone.vercel.app",
+    "https://abb-takk-news-website.vercel.app"
+  ],
+  credentials: true,
+}));
 app.use(express.json({extended:true}));
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  console.log("Incoming request from:", req.headers.origin);
+  next();
+});
 
 // Routes
 app.use("/api/news", newsRoutes);
