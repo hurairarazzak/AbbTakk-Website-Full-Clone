@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/news';
+const API_URL = 'https://abb-takk-news-website-diuw.vercel.app/api/news';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
