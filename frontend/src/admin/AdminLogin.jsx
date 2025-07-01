@@ -13,7 +13,7 @@ const AdminLogin = () => {
     try {
       const data = await loginAdmin(email, password);
       localStorage.setItem("adminToken", data.token);
-      navigate("/admin/dashboard"); // ✅ Redirect to dashboard
+      navigate("/admin/dashboard");
     } catch (err) {
       setError("Invalid credentials. Please try again.");
     }
@@ -29,7 +29,6 @@ const AdminLogin = () => {
             <input
               type="email"
               className="w-full px-4 py-2 text-black border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-[#dd3333]"
-              placeholder="admin@abbtakk.pk"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required

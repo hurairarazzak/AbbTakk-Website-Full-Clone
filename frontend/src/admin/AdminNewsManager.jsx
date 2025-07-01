@@ -204,31 +204,6 @@ const AdminNewsManager = () => {
                     </button>
                 </div>
             </form>
-
-            {/* News List */}
-            <div className="space-y-6">
-                {newsList.map((news) => (
-                    <div
-                        key={news._id}
-                        className="bg-gray-50 p-4 rounded border-l-4 border-[#dd3333] shadow-sm flex justify-between items-center"
-                    >
-                        <div>
-                            <h3 className="font-semibold text-gray-800">{news.title}</h3>
-                            <p className="text-xs text-gray-500">
-                                {news.category || "Uncategorized"} –{" "}
-                                {news.isMostPopular ? "🌟 Popular" : ""}
-                            </p>
-                        </div>
-
-                        <button
-                            onClick={() => handleDelete(news._id)}
-                            className="text-sm text-red-600 hover:underline"
-                        >
-                            Delete
-                        </button>
-                    </div>
-                ))}
-            </div>
         </div>
     );
 };

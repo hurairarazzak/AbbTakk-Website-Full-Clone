@@ -8,6 +8,17 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [news, setNews] = useState([]);
 
+  const token = localStorage.getItem("adminToken");
+
+  // Redirect to login if not logged in
+  useEffect(() => {
+    if (!token) {
+      navigate("/admin/login");
+    } else {
+      fetchNews();
+    }
+  }, []);
+
   const fetchNews = async () => {
     try {
       const res = await axios.get(API_URL);
@@ -18,9 +29,25 @@ const AdminDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchNews();
-  }, []);
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this news item?')) return;
+
+    try {
+      await axios.delete(`${API_URL}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchNews();
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    navigate("/admin/login");
+  };
 
   const totalNews = news.length;
   const pinnedNews = news.filter(item => item.isPinned).length;
@@ -28,15 +55,23 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
         <h1 className="text-3xl font-bold text-red-600">🛠️ Admin Dashboard</h1>
-        <button
-          onClick={() => navigate('/admin/manage-news')}
-          className="mt-4 sm:mt-0 bg-[#dd3333] text-white px-5 py-2 rounded-md font-medium hover:bg-red-700 transition"
-        >
-          ➕ Add News
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate('/admin/add-news')}
+            className="bg-[#dd3333] text-white px-5 py-2 rounded-md font-medium hover:bg-red-700 transition"
+          >
+            ➕ Add News
+          </button>
+          <button
+            onClick={handleLogout}
+            className="bg-gray-300 text-gray-800 px-5 py-2 rounded-md font-medium hover:bg-gray-400 transition"
+          >
+            🚪 Logout
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -55,7 +90,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* News Table */}
+      {/* Table */}
       <div className="bg-white shadow rounded overflow-x-auto">
         <h2 className="text-xl font-semibold px-4 py-4 border-b text-gray-800">📰 All News</h2>
         {news.length === 0 ? (
@@ -68,6 +103,7 @@ const AdminDashboard = () => {
                 <th className="px-4 py-3">Category</th>
                 <th className="px-4 py-3">Pinned</th>
                 <th className="px-4 py-3">Popular</th>
+                <th className="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -77,6 +113,14 @@ const AdminDashboard = () => {
                   <td className="px-4 py-3">{item.category || '—'}</td>
                   <td className="px-4 py-3">{item.isPinned ? '✅' : '❌'}</td>
                   <td className="px-4 py-3">{item.isMostPopular ? '⭐' : '—'}</td>
+                  <td className="px-4 py-3 text-center">
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className="text-sm text-red-600 hover:underline"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

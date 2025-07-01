@@ -24,7 +24,7 @@ import Technology from './pages/Technology';
 import AdminLogin from './admin/AdminLogin';
 import AdminDashboard from './admin/AdminDashboard';
 import AdminNewsManager from './admin/AdminNewsManager';
-// import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -51,8 +51,23 @@ function App() {
         <Route path="/technology" element={<Technology />} />
         <Route path="/:slug" element={<NewsDetail />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/manage-news" element={<AdminNewsManager />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/add-news"
+          element={
+            <ProtectedRoute>
+              <AdminNewsManager />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
