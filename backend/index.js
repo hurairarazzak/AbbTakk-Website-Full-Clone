@@ -11,9 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ Allow all origins for now (testing only)
-app.use(cors({
-  origin: "*", // use wildcard for now
-}));
+app.use(cors());
 
 // ✅ Middlewares
 app.use(express.json({ extended: true }));
