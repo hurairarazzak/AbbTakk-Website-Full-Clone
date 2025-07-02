@@ -10,22 +10,20 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middlewares
+// ✅ Allow all origins for now (testing only)
 app.use(cors({
-  origin: [
-    "https://abb-takk-website-full-clone.vercel.app", // ✅ your frontend
-    "https://abb-takk-news-website-diuw.vercel.app"   // ✅ your backend (optional)
-  ],
-  credentials: true,
+  origin: "*", // use wildcard for now
 }));
-app.use(express.json({extended:true}));
+
+// ✅ Middlewares
+app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// ✅ Routes
 app.use("/api/news", newsRoutes);
 app.use("/api/admin", adminRoutes);
 
-// MongoDB connection
+// ✅ MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
