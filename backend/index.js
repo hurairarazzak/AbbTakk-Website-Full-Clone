@@ -10,18 +10,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Allow all origins for now (testing only)
+// Middlewares
 app.use(cors());
-
-// ✅ Middlewares
-app.use(express.json({ extended: true }));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Routes
+// Routes
 app.use("/api/news", newsRoutes);
 app.use("/api/admin", adminRoutes);
 
-// ✅ MongoDB connection
+// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
