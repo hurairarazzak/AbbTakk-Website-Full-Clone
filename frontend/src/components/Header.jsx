@@ -10,6 +10,7 @@ const navLinks = [
   { name: 'World', path: '/world' },
   { name: 'Programs', path: '/programs' },
   { name: 'Contact Us', path: '/contact-us' },
+  { name: 'Live Cricket', path: '/live-cricket-score' },
   { name: 'Live TV', path: '/live-tv' }
 ];
 

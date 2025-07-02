@@ -25,6 +25,7 @@ import AdminLogin from './admin/AdminLogin';
 import AdminDashboard from './admin/AdminDashboard';
 import AdminNewsManager from './admin/AdminNewsManager';
 import ProtectedRoute from './components/ProtectedRoute';
+import LiveScore from './components/LiveScore';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
         <Route path="/health-and-environment" element={<HealthAndEnvironment />} />
         <Route path="/technology" element={<Technology />} />
         <Route path="/:slug" element={<NewsDetail />} />
+        <Route path="/live-cricket-score" element={<LiveScore />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/dashboard"
