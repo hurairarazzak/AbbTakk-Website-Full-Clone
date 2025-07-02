@@ -25,13 +25,13 @@ router.delete("/:id", verifyAdmin, deleteNews);
 
 // ✅ category-based fetch with case-insensitive matching
 router.get('/category/:category', async (req, res) => {
-  const category = req.params.category;
+  const category = decodeURIComponent(req.params.category); // ✅ FIX: handle %20 etc.
 
   try {
     const news = await News.find({
       category: { $regex: new RegExp(`^${category}$`, 'i') },
       isMostPopular: false
-    }).sort({ createdAt: -1 }); // ✅ Sort
+    }).sort({ createdAt: -1 }); // ✅ Sorted latest first
 
     res.json(news);
   } catch (err) {
